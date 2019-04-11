@@ -13,8 +13,12 @@ export class ToDoListComponent implements OnInit {
   ngOnInit() {
   }
 
-  onAddedToDo = (toDoText:string) => {
+  onAddedToDo = (toDoText: string) => {
     this.toDoArray.push(toDoText);
+  };
+
+  onDeletedToDo = (itemIndex: number) => {
+    this.toDoArray = this.toDoArray.filter((toDo, index) => index !== itemIndex);
   };
 
 }
