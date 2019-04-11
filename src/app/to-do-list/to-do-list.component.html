@@ -1,5 +1,3 @@
 <h2>To Do List Container</h2>
-<app-add-to-do (msgEvent)="receiveValue($event)" ></app-add-to-do>
-
-<br />
-This is the TO DO upon CLICKED: {{ toDoInput }}
+<app-add-to-do (newToDo)="onAddedToDo($event)"></app-add-to-do>
+<app-to-do-item *ngFor = "let toDoItem of toDoArray" [toDoText] = "toDoItem"></app-to-do-item>

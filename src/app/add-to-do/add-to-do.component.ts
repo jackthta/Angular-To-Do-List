@@ -8,15 +8,15 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class AddToDoComponent implements OnInit {
   toDoInput:string = "";
 
-  @Output() msgEvent = new EventEmitter<string>();
+  @Output() newToDo = new EventEmitter<string>();
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  emitToDoInput = () => {
-    this.msgEvent.emit(this.toDoInput);
-  }
+  onAddToDo = () => {
+    this.newToDo.emit(this.toDoInput);
+  };
 
 }

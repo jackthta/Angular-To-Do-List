@@ -6,16 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./to-do-list.component.scss']
 })
 export class ToDoListComponent implements OnInit {
-  toDoInput:string = "";
+  toDoArray: string[] = [];
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  receiveValue = ($event) => {
-    console.log($event);
-    this.toDoInput = $event;
-  }
+  onAddedToDo = (toDoText:string) => {
+    this.toDoArray.push(toDoText);
+  };
 
 }
