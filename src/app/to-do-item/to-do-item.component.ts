@@ -8,16 +8,19 @@ import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 export class ToDoItemComponent implements OnInit {
   @Input() toDoText:string;
   @Input() index:number;
-
   @Output() deleteToDo = new EventEmitter<number>();
 
-  constructor() { }
+  isFinished:boolean = false;
 
-  ngOnInit() {
-  }
+  constructor() {}
+  ngOnInit() {}
 
   onDeleteToDo = () => {
     this.deleteToDo.emit(this.index);
+  };
+
+  onFinished = () => {
+    this.isFinished = !this.isFinished;
   };
 
 }

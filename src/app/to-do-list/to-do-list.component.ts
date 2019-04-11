@@ -8,10 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class ToDoListComponent implements OnInit {
   toDoArray: string[] = [];
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+  constructor() {}
+  ngOnInit() {}
 
   onAddedToDo = (toDoText: string) => {
     this.toDoArray.push(toDoText);
