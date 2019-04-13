@@ -1,4 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+
+import { TodosService } from '../todos.service';
 
 @Component({
   selector: "app-add-to-do",
@@ -9,16 +11,14 @@ export class AddToDoComponent implements OnInit {
   toDoInput: string = "";
   hasNoText: boolean;
 
-  @Output() newToDo = new EventEmitter<string>();
-
-  constructor() { }
+  constructor(private todosService: TodosService) { }
   ngOnInit() { }
 
   onAddToDo = () => {
-    this.newToDo.emit(this.toDoInput);
+    this.todosService.addToDo(this.toDoInput);
   };
 
-  checkValid = () => {
+  onCheckValid = () => {
     this.hasNoText = this.toDoInput.length === 0;
     if (!this.hasNoText) {
       this.onAddToDo();

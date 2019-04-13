@@ -1,3 +1,9 @@
-<input type="text" [(ngModel)]="toDoInput" />
-<button type="submit" (click)="checkValid()">Add</button>
-<p *ngIf="hasNoText">Your task can't be empty!</p>
+<div class="add-to-do-parent">
+    <div class="no-text" *ngIf="hasNoText">
+        <p>Your task can't be empty!</p>
+    </div>
+    <div class="input-parent">
+        <input type="text" [(ngModel)]="toDoInput" />
+        <button type="submit" (click)="onCheckValid()">+</button>
+    </div>
+</div>

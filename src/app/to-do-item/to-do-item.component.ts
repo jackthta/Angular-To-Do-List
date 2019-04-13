@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+import { TodosService } from '../todos.service';
 
 @Component({
   selector: 'app-to-do-item',
@@ -8,15 +10,14 @@ import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 export class ToDoItemComponent implements OnInit {
   @Input() toDoText:string;
   @Input() index:number;
-  @Output() deleteToDo = new EventEmitter<number>();
 
   isFinished:boolean = false;
 
-  constructor() {}
+  constructor(private todosService: TodosService) {}
   ngOnInit() {}
 
   onDeleteToDo = () => {
-    this.deleteToDo.emit(this.index);
+    this.todosService.deleteToDo(this.index);
   };
 
   onFinished = () => {

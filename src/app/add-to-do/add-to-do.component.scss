@@ -1,0 +1,25 @@
+.add-to-do-parent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.no-text {
+    background-color: #ff9994;
+    border-radius: 3px;
+}
+
+.input-parent {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+    input {
+        flex: 2;
+        height: 3rem;
+    }
+
+    button {
+        flex: 0 0 8rem;
+    }
+}

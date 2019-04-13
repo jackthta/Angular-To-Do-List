@@ -1,0 +1,24 @@
+div {
+    width: 100%;
+    height: 5rem;
+    border: 1px solid black;
+    display: flex;
+    justify-content: flex-start;
+
+    input {
+        flex: 0 0 2rem;
+        margin-left: 2rem;
+    }
+
+    span {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    button {
+        flex: 0 0 6rem;
+        margin-right: 2rem;
+    }
+}

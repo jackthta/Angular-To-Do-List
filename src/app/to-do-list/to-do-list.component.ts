@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { TodosService } from '../todos.service';
+
 @Component({
   selector: 'app-to-do-list',
   templateUrl: './to-do-list.component.html',
@@ -8,15 +10,18 @@ import { Component, OnInit } from '@angular/core';
 export class ToDoListComponent implements OnInit {
   toDoArray: string[] = [];
 
-  constructor() {}
-  ngOnInit() {}
+  constructor(private todosService: TodosService) {}
 
-  onAddedToDo = (toDoText: string) => {
-    this.toDoArray.push(toDoText);
-  };
-
-  onDeletedToDo = (itemIndex: number) => {
-    this.toDoArray = this.toDoArray.filter((toDo, index) => index !== itemIndex);
-  };
-
+  ngOnInit() {
+    this.toDoArray = this.todosService.toDoArray;
+  } 
 }
+
+/*  NOTE TO SELF 
+    The toDoArray in this class is given a REFERENCE
+    to the toDoArray in TodosService. If the array is REASSIGNED in the service,
+    then the toDoArray instance in this class will not automatically
+    reassign itself to the new array. Therefore to modify the array
+    in the service so that the changes can be heard here, you have to
+    modify the toDoArray array in the service via splice and not filter.
+*/

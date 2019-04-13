@@ -1,8 +1,8 @@
-<h2>To Do List Container</h2>
-<app-add-to-do (newToDo)="onAddedToDo($event)"></app-add-to-do>
-<app-to-do-item
-    *ngFor = "let toDoItem of toDoArray; let index = index"
-    (deleteToDo) = "onDeletedToDo($event)"
-    [toDoText] = "toDoItem"
-    [index]="index"
-    ></app-to-do-item>
+<main>
+    <div class="tasks">
+        <h1>Let's Task!</h1>
+        <app-to-do-item *ngFor="let toDoItem of toDoArray; let index = index" [toDoText]="toDoItem" [index]="index">
+        </app-to-do-item>
+    </div>
+    <app-add-to-do></app-add-to-do>
+</main>
