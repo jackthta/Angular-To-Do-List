@@ -1,3 +1,16 @@
-<p>
-  login works!
-</p>
+<form (ngSubmit)="onLogin(loginForm)" #loginForm="ngForm">
+  <h2>Login</h2>
+
+  <div>
+    <label for="email">E-mail</label>
+    <input type="email" id="email" name="email" required ngModel>
+  </div>
+
+  <div>
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required ngModel>
+  </div>
+
+  <button type="submit" [disabled]="!loginForm.valid">Login!</button>
+
+</form>

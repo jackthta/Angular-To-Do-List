@@ -9,6 +9,7 @@ import { ToDoItemComponent } from './to-do/to-do-item/to-do-item.component';
 import { AddToDoComponent } from './to-do/add-to-do/add-to-do.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
+import { HeaderComponent } from './header/header/header.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { LoginComponent } from './auth/login/login.component';
     ToDoItemComponent,
     AddToDoComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

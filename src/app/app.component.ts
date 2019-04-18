@@ -9,6 +9,9 @@ import keys from '../private/keys.js';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
+
+    constructor() {}
+
     ngOnInit() {
       firebase.initializeApp(keys.FirebaseConfig);
     };
