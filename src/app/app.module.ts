@@ -10,6 +10,7 @@ import { AddToDoComponent } from './to-do/add-to-do/add-to-do.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { HeaderComponent } from './header/header/header.component';
+import { ToDoHistoryComponent } from './to-do/to-do-history/to-do-history.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HeaderComponent } from './header/header/header.component';
     AddToDoComponent,
     RegisterComponent,
     LoginComponent,
-    HeaderComponent
+    HeaderComponent,
+    ToDoHistoryComponent
   ],
   imports: [
     BrowserModule,

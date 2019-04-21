@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
@@ -8,13 +9,14 @@ import 'firebase/auth';
 export class AuthService {
   token: string = undefined;
 
-  constructor() {}
+  constructor(private route: Router) {}
   
   registerUser(email: string, password: string) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(
         () => {
           console.log("Succesfully registered user.");
+          this.route.navigate(['/login']);
         }
       )
       .catch(
@@ -34,6 +36,8 @@ export class AuthService {
             .then(
               (token: string) => this.token = token
             );
+
+          this.route.navigate(['/']);
         }
       )
       .catch(
@@ -49,6 +53,7 @@ export class AuthService {
         () => {
           console.log("Succesfully logged user out.");
           this.token = undefined;
+          this.route.navigate(['/']);
         }
       )
       .catch(
@@ -58,7 +63,7 @@ export class AuthService {
       );
   }
 
-  isAuthenticated() {
+  isAuthenticated(): boolean {
     return this.token !== undefined;
   }
 }

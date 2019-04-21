@@ -5,6 +5,9 @@
             <li><a routerLink="/register">Register</a></li>
             <li><a routerLink="/login">Log in</a></li>
         </ng-template>
-        <li><a *ngIf="authService.isAuthenticated()" (click)="onLogout()" routerLink="/">Log out</a></li>
+        <ng-template [ngIf]="authService.isAuthenticated()">
+            <li><a routerLink="/to-do-history">My Task History</a></li>
+            <li><a (click)="onLogout()" routerLink="/">Log out</a></li>
+        </ng-template>
     </ul>
 </nav>
