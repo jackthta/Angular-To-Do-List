@@ -11,6 +11,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { HeaderComponent } from './header/header/header.component';
 import { ToDoHistoryComponent } from './to-do/to-do-history/to-do-history.component';
+import { AuthService } from './auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { ToDoHistoryComponent } from './to-do/to-do-history/to-do-history.compon
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

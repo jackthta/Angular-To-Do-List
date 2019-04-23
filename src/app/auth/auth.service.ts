@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
@@ -26,9 +26,7 @@ export class AuthService {
         }
       )
       .catch(
-        (error) => {
-          console.log("Error registering user.", error);
-        }
+        (error) => console.log("Error registering user.", error)
       )
   }
 
@@ -64,13 +62,15 @@ export class AuthService {
         }
       )
       .catch(
-        (error) => {
-          console.log("Error logging user out.", error);
-        }
+        (error) => console.log("Error logging user out.", error)
       );
   }
 
   isAuthenticated(): boolean {
     return this.token !== undefined;
+  }
+
+  setToken(token): void {
+    this.token = token;
   }
 }

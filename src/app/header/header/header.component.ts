@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-
   constructor(private authService: AuthService) {}
 
   onLogout() {
