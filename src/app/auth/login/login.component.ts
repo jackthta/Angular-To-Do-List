@@ -15,7 +15,11 @@ export class LoginComponent {
     const email: string = form.value.email;
     const password: string = form.value.password;
 
-    this.authService.loginUser(email, password);
+    this.authService.loginUser("email", email, password);
+  }
+
+  onLoginWithGoogle() {
+    this.authService.loginUser("google");
   }
 
 }

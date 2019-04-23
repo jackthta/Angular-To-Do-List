@@ -3,15 +3,21 @@ import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
+import { AuthLoginService } from './auth-login.service';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   token: string = undefined;
 
-  constructor(private route: Router) {}
+  constructor(private route: Router, private authLogin: AuthLoginService) {}
+
+  /* *
+  *   Functions that deal with the login/out, register, and authentication status.
+  * */
   
-  registerUser(email: string, password: string) {
+  registerUser(email: string, password: string): void {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(
         () => {
@@ -26,28 +32,29 @@ export class AuthService {
       )
   }
 
-  loginUser(email: string, password: string) {
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(
-        () => {
-          console.log("Succesfully logged user in.");
+  async loginUser(method: string, email: string = undefined, password: string = undefined) {
+    let userToken;
 
-          firebase.auth().currentUser.getIdToken()
-            .then(
-              (token: string) => this.token = token
-            );
+    method = method.toLowerCase();
+    switch (method) {
+      case "email":
+        userToken = await this.authLogin.loginWithEmail(email, password);
+      break;
+      case "google":
+        userToken = await this.authLogin.loginWithGoogle();
+      break;
+      case "facebook":
+      break;
+      default:
+          console.log("Invalid login method.");
+      break;
+    }
 
-          this.route.navigate(['/']);
-        }
-      )
-      .catch(
-        (error) => {
-          console.log("Error logging user in.", error);
-        }
-      );
+    this.token = userToken;
+    this.route.navigate(["/"]);
   }
 
-  logoutUser() {
+  logoutUser(): void {
     firebase.auth().signOut()
       .then(
         () => {
