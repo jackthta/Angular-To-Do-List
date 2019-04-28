@@ -14,14 +14,14 @@ export class AddToDoComponent implements OnInit {
   constructor(private databaseService: DatabaseService) { }
   ngOnInit() {}
 
-  onAddToDo = () => {
-    this.databaseService.addToDo(this.toDoInput);
+  onAddTask = () => {
+    this.databaseService.addTask(this.toDoInput);
   };
 
   onCheckValid = () => {
     this.hasNoText = this.toDoInput.length === 0;
     if (!this.hasNoText) {
-      this.onAddToDo();
+      this.onAddTask();
       this.toDoInput = "";
     }
   };

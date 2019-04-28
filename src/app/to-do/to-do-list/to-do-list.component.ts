@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import * as firebase from 'firebase/app';
+import 'firebase/database';
+import 'firebase/auth';
 
 import { DatabaseService } from 'src/app/database/database.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-to-do-list',
@@ -8,16 +12,26 @@ import { DatabaseService } from 'src/app/database/database.service';
   styleUrls: ['./to-do-list.component.scss']
 })
 export class ToDoListComponent implements OnInit {
-  taskArray: string[] = [];
-
-  constructor(private databaseService: DatabaseService) {}
+  constructor(private databaseService: DatabaseService, private authService: AuthService) { }
 
   ngOnInit() {
-    this.taskArray = this.databaseService.taskArray;
-  } 
+    //If this works properly, maybe place this in the root app component.
+    //Or maybe not because you'd want this listener to be applied 
+    //specifically for this component. You'd want another listener for the to-do-history.
+    firebase.auth().onAuthStateChanged(
+      (user) => {
+        if (user) {
+          let taskRef = firebase.database().ref(`user_tasks/${user.uid}`);
+          taskRef.on('child_added', (child) => {
+            //console.log(child.val());
+          });
+        }
+      }
+    );
+  }
 }
 
-/*  NOTE TO SELF 
+/*  NOTE TO SELF
     The toDoArray in this class is given a REFERENCE
     to the toDoArray in TodosService. If the array is REASSIGNED in the service,
     then the toDoArray instance in this class will not automatically

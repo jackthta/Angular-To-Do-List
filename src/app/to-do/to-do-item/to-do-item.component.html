@@ -2,7 +2,7 @@
    <input
     type="checkbox"
     (click) = "onFinished()"
-    [checked] = "isFinished"
+    [checked] = "task.isComplete"
         />
-    <span>{{ toDoText }}</span><button (click) = "onDeleteToDo()">✖</button>
+    <span>{{ task.task }}</span><button (click) = "onDeleteToDo()">✖</button>
 </div>

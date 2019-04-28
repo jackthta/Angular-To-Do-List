@@ -8,32 +8,50 @@ import { AuthService } from '../auth/auth.service';
   providedIn: 'root'
 })
 export class DatabaseService {
-  taskArray = ["Test", "Test", "Test"];
+  taskArray = [];
 
-  constructor(private authService: AuthService, private databaseService: DatabaseService) {}
+  constructor(private authService: AuthService) {}
 
-  addToDo(toDoText: string) {
-    this.taskArray.push(toDoText);
+  getTaskList() {
+    return this.taskArray;
+  }
 
-    //Check if user is authenticated. If it is, save to DB. If it isn't, don't save.
-    /*
+  getTaskListLength(tasklist) {
+    return Object.keys(tasklist).length;
+  }
+
+  addTask(toDoText: string) {
+    //Check if user is authenticated. If it is, add to DB.
     if (this.authService.isAuthenticated()) {
-      this.databaseService.addTask(toDoText);
+      this.addTaskToDatabase(toDoText, this.authService.getUser().uid);
+    } else {
+      //This is for non-authenticated users.
+      let nonAuthTaskObj = {
+        id: this.getTaskListLength(this.taskArray),
+        task: toDoText,
+        isComplete: false
+      };
+      this.taskArray[this.getTaskListLength(this.taskArray)] = nonAuthTaskObj;
     }
-    */
   };
 
-  deleteToDo(itemIndex: number) {
-    this.taskArray.splice(itemIndex, 1);
-  };
-
-  addTaskAUTHED(task: string, uid = this.authService.getUser().uid) {
-    let taskKey = firebase.database().ref().push().key;
-    let taskObj = {
-      task: task,
+  addTaskToDatabase(task: string, uid: string) {
+    let newTaskRef = firebase.database().ref(`user_tasks/${uid}/`).push();
+    let newTaskObj = {
+      id: newTaskRef.key,
+      task,
       isComplete: false
     };
 
-    firebase.database().ref(`user_tasks/${uid}/${taskKey}`).update(taskObj);
+    //Update database array.
+    newTaskRef.update(newTaskObj);
+    //Update in-app array.
+    this.taskArray[this.getTaskListLength(this.taskArray)] = newTaskObj;
   }
+
+  deleteToDo(itemIndex: number) {
+    //this.taskArray.splice(itemIndex, 1);
+    //To delete, get the index (if non-auth) or pushKey (if authed), and directly remove it from there.
+  };
+
 }
