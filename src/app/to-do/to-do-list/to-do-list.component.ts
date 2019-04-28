@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TodosService } from '../todos.service';
+import { DatabaseService } from 'src/app/database/database.service';
 
 @Component({
   selector: 'app-to-do-list',
@@ -8,12 +8,12 @@ import { TodosService } from '../todos.service';
   styleUrls: ['./to-do-list.component.scss']
 })
 export class ToDoListComponent implements OnInit {
-  toDoArray: string[] = [];
+  taskArray: string[] = [];
 
-  constructor(private todosService: TodosService) {}
+  constructor(private databaseService: DatabaseService) {}
 
   ngOnInit() {
-    this.toDoArray = this.todosService.toDoArray;
+    this.taskArray = this.databaseService.taskArray;
   } 
 }
 

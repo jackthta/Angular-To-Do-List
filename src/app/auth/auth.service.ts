@@ -10,6 +10,7 @@ import { AuthLoginService } from './auth-login.service';
 })
 export class AuthService {
   token: string = undefined;
+  user = undefined;
 
   constructor(private route: Router, private authLogin: AuthLoginService) {}
 
@@ -66,11 +67,23 @@ export class AuthService {
       );
   }
 
+  getUser() {
+    return this.user;
+  }
+
+  setUser(user) {
+    this.user = user;
+  }
+
   isAuthenticated(): boolean {
     return this.token !== undefined;
   }
 
   setToken(token): void {
     this.token = token;
+  }
+
+  getToken(): string {
+    return this.token;
   }
 }

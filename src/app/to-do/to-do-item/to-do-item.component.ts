@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { TodosService } from '../todos.service';
+import { DatabaseService } from 'src/app/database/database.service';
 
 @Component({
   selector: 'app-to-do-item',
@@ -13,11 +13,11 @@ export class ToDoItemComponent implements OnInit {
 
   isFinished:boolean = false;
 
-  constructor(private todosService: TodosService) {}
+  constructor(private databaseService: DatabaseService) {}
   ngOnInit() {}
 
   onDeleteToDo = () => {
-    this.todosService.deleteToDo(this.index);
+    this.databaseService.deleteToDo(this.index);
   };
 
   onFinished = () => {

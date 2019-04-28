@@ -25,6 +25,7 @@ export class AppComponent implements OnInit{
       firebase.auth().onAuthStateChanged(
         (user) => {
           if (user) {
+            this.authService.setUser(user);
             this.authLogin.getUserToken(user)
               .then(
                 (token) => {
@@ -34,6 +35,7 @@ export class AppComponent implements OnInit{
               .catch(
                 (error) => console.log("Error retrieving user token on init.", error)
               );
+            //Unsure how to apply persistence yet.
             //firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
           }
         }

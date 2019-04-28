@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 
-import { TodosService } from '../todos.service';
+import { DatabaseService } from 'src/app/database/database.service';
 
 @Component({
   selector: "app-add-to-do",
@@ -11,11 +11,11 @@ export class AddToDoComponent implements OnInit {
   toDoInput: string = "";
   hasNoText: boolean;
 
-  constructor(private todosService: TodosService) { }
-  ngOnInit() { }
+  constructor(private databaseService: DatabaseService) { }
+  ngOnInit() {}
 
   onAddToDo = () => {
-    this.todosService.addToDo(this.toDoInput);
+    this.databaseService.addToDo(this.toDoInput);
   };
 
   onCheckValid = () => {
