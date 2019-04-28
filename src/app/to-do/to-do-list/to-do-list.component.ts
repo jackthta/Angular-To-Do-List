@@ -15,9 +15,11 @@ export class ToDoListComponent implements OnInit {
   constructor(private databaseService: DatabaseService, private authService: AuthService) { }
 
   ngOnInit() {
-    //If this works properly, maybe place this in the root app component.
-    //Or maybe not because you'd want this listener to be applied 
-    //specifically for this component. You'd want another listener for the to-do-history.
+    // Think about how listening to child events is useful in this app.
+    // For ex:
+    // When a child is added, it returns the child element that was added.
+    // What can you do with this child element? 
+    // Maybe add it to the in-app array? Think about it.
     firebase.auth().onAuthStateChanged(
       (user) => {
         if (user) {

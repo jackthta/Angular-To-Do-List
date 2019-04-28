@@ -44,14 +44,33 @@ export class DatabaseService {
     };
 
     //Update database array.
-    newTaskRef.update(newTaskObj);
+    newTaskRef.update(newTaskObj)
+      .then(
+        () => console.log("Successfully added task.")
+      )
+      .catch(
+        (error) => console.log("Error adding task.", error)
+      );
     //Update in-app array.
     this.taskArray[this.getTaskListLength(this.taskArray)] = newTaskObj;
   }
 
-  deleteToDo(itemIndex: number) {
-    //this.taskArray.splice(itemIndex, 1);
-    //To delete, get the index (if non-auth) or pushKey (if authed), and directly remove it from there.
+  deleteToDo(itemIndex: number, pushKey: number = undefined) {
+    this.taskArray.splice(itemIndex, 1);
+
+    if (this.authService.isAuthenticated()) {
+      this.deleteTaskInDatabase(pushKey, this.authService.getUser().uid);
+    }
   };
+
+  deleteTaskInDatabase(pushKey: number, uid: string) {
+    firebase.database().ref(`user_tasks/${uid}/${pushKey}`).remove()
+      .then(
+        () => console.log("Successfully deleted task.")
+      )
+      .catch(
+        (error) => console.log("Error deleting task.", error)
+      );
+  }
 
 }

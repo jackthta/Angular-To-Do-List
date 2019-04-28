@@ -15,7 +15,7 @@ export class ToDoItemComponent implements OnInit {
   ngOnInit() {}
 
   onDeleteToDo = () => {
-    this.databaseService.deleteToDo(this.index);
+    this.databaseService.deleteToDo(this.index, this.task.id);
   };
 
   onFinished = () => {
