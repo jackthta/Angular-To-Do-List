@@ -21,17 +21,16 @@ export class DatabaseService {
   }
 
   addTask(toDoText: string) {
-    //Check if user is authenticated. If it is, add to DB.
+    //Check if user is authenticated. If it is, add to database.
     if (this.authService.isAuthenticated()) {
       this.addTaskToDatabase(toDoText, this.authService.getUser().uid);
     } else {
       //This is for non-authenticated users.
       let nonAuthTaskObj = {
         id: this.getTaskListLength(this.taskArray),
-        task: toDoText,
-        isComplete: false
+        task: toDoText
       };
-      this.taskArray[this.getTaskListLength(this.taskArray)] = nonAuthTaskObj;
+      this.addTaskToApp(nonAuthTaskObj);
     }
   };
 
@@ -51,15 +50,24 @@ export class DatabaseService {
       .catch(
         (error) => console.log("Error adding task.", error)
       );
-    //Update in-app array.
-    this.taskArray[this.getTaskListLength(this.taskArray)] = newTaskObj;
+  }
+
+  addTaskToApp(task) {
+    let taskObj = {
+      id: task.id,
+      task: task.task,
+      isComplete: false
+    };
+    this.taskArray[this.getTaskListLength(this.taskArray)] = taskObj;
   }
 
   deleteToDo(itemIndex: number, pushKey: number = undefined) {
-    this.taskArray.splice(itemIndex, 1);
-
+    //Check if user is authenticated, if so delete the task in database.
     if (this.authService.isAuthenticated()) {
       this.deleteTaskInDatabase(pushKey, this.authService.getUser().uid);
+    } else {
+      //This is for non-authenticated users.
+      this.deleteTaskinApp(itemIndex);
     }
   };
 
@@ -71,6 +79,10 @@ export class DatabaseService {
       .catch(
         (error) => console.log("Error deleting task.", error)
       );
+  }
+
+  deleteTaskinApp(itemIndex: number) {
+    this.taskArray.splice(itemIndex, 1);
   }
 
 }

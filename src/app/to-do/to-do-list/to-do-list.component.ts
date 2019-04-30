@@ -15,17 +15,25 @@ export class ToDoListComponent implements OnInit {
   constructor(private databaseService: DatabaseService, private authService: AuthService) { }
 
   ngOnInit() {
-    // Think about how listening to child events is useful in this app.
-    // For ex:
-    // When a child is added, it returns the child element that was added.
-    // What can you do with this child element? 
-    // Maybe add it to the in-app array? Think about it.
     firebase.auth().onAuthStateChanged(
       (user) => {
         if (user) {
+
+          //Upon successful update to database, these events will fire and apply proper
+          //modifications to the in-app array which will update the view.
           let taskRef = firebase.database().ref(`user_tasks/${user.uid}`);
-          taskRef.on('child_added', (child) => {
-            //console.log(child.val());
+          taskRef.on('child_added', (child) => this.databaseService.addTaskToApp(child.val()));
+          taskRef.on('child_removed', (child) => {
+            //OBJ: Find the index of the removed child to update the view.
+            //1. Get the task array
+            //2. Search through and find the task in the array that matches the ID of the child
+            //3. Execute the deleteTaskInApp function with the founded index.
+            let taskList = this.databaseService.getTaskList();
+            for (let task in taskList) {
+              if (taskList[task].id === child.val().id) {
+                this.databaseService.deleteTaskinApp(parseInt(task));
+              }
+            }
           });
         }
       }
