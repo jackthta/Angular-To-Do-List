@@ -9,7 +9,7 @@ import { DatabaseService } from 'src/app/database/database.service';
 })
 export class ToDoItemComponent implements OnInit {
   @Input() task;
-  @Input() index:number;
+  @Input() index: number;
 
   constructor(private databaseService: DatabaseService) {}
   ngOnInit() {}
@@ -19,8 +19,7 @@ export class ToDoItemComponent implements OnInit {
   };
 
   onFinished = () => {
-    //this.isFinished = !this.isFinished;
-    //Update database and view.
+    this.databaseService.updateTask(!this.task.isComplete, this.index ,this.task.id);
   };
 
 }

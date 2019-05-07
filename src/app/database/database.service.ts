@@ -28,7 +28,8 @@ export class DatabaseService {
       //This is for non-authenticated users.
       let nonAuthTaskObj = {
         id: this.getTaskListLength(this.taskArray),
-        task: toDoText
+        task: toDoText,
+        isComplete: false
       };
       this.addTaskToApp(nonAuthTaskObj);
     }
@@ -56,7 +57,7 @@ export class DatabaseService {
     let taskObj = {
       id: task.id,
       task: task.task,
-      isComplete: false
+      isComplete: task.isComplete
     };
     this.taskArray[this.getTaskListLength(this.taskArray)] = taskObj;
   }
@@ -83,6 +84,29 @@ export class DatabaseService {
 
   deleteTaskinApp(itemIndex: number) {
     this.taskArray.splice(itemIndex, 1);
+  }
+
+  updateTask(status: boolean, itemIndex: number, pushKey: number = undefined) {
+    if (this.authService.isAuthenticated()) {
+      this.updateTaskInDatabase(status, pushKey, this.authService.getUser().uid);
+    } else {
+      //This is for non-authenticated users.
+      this.updateTaskInApp(status, itemIndex);
+    }
+  }
+
+  updateTaskInDatabase(status: boolean, pushKey: number, uid: string) {
+    firebase.database().ref(`user_tasks/${uid}/${pushKey}`).update({ isComplete: status })
+      .then(
+        () => console.log("Updated task.")
+      )
+      .catch(
+        (error) => console.log("Error updating task.", error)
+      );
+  }
+
+  updateTaskInApp(status: boolean, itemIndex: number) {
+    this.taskArray[itemIndex].isComplete = status;
   }
 
 }

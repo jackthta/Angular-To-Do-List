@@ -4,7 +4,6 @@ import 'firebase/database';
 import 'firebase/auth';
 
 import { DatabaseService } from 'src/app/database/database.service';
-import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-to-do-list',
@@ -12,19 +11,18 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./to-do-list.component.scss']
 })
 export class ToDoListComponent implements OnInit {
-  constructor(private databaseService: DatabaseService, private authService: AuthService) { }
+  constructor(private databaseService: DatabaseService) { }
 
   ngOnInit() {
     firebase.auth().onAuthStateChanged(
       (user) => {
         if (user) {
-
           //Upon successful update to database, these events will fire and apply proper
           //modifications to the in-app array which will update the view.
           let taskRef = firebase.database().ref(`user_tasks/${user.uid}`);
-          taskRef.on('child_added', (child) => this.databaseService.addTaskToApp(child.val()));
+          taskRef.on('child_added', (child) => this.databaseService.addTaskToApp(child.val())); //Note that this populates the taskArray upon to-do-list component initialization.
           taskRef.on('child_removed', (child) => {
-            //OBJ: Find the index of the removed child to update the view.
+            //ALG: Find the index of the removed child to update the view.
             //1. Get the task array
             //2. Search through and find the task in the array that matches the ID of the child
             //3. Execute the deleteTaskInApp function with the founded index.
@@ -32,6 +30,14 @@ export class ToDoListComponent implements OnInit {
             for (let task in taskList) {
               if (taskList[task].id === child.val().id) {
                 this.databaseService.deleteTaskinApp(parseInt(task));
+              }
+            }
+          });
+          taskRef.on('child_changed', (child) => {
+            let taskList = this.databaseService.getTaskList();
+            for (let task in taskList) {
+              if (taskList[task].id === child.val().id) {
+                this.databaseService.updateTaskInApp(child.val().isComplete, parseInt(task));
               }
             }
           });
