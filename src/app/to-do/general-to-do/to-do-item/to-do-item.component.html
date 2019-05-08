@@ -1,0 +1,11 @@
+<div>
+   <input
+    type="checkbox"
+    (click)="onFinishedTask()"
+    [checked]="task.isComplete"
+        />
+    <span>{{ task.task }}</span>
+    <button
+        (click)="(task.isComplete && authService.isAuthenticated()) ? onMoveTask() : onDeleteTask()"
+        >✖</button>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
@@ -10,8 +10,9 @@ import { DatabaseService } from 'src/app/database/database.service';
   templateUrl: './to-do-list.component.html',
   styleUrls: ['./to-do-list.component.scss']
 })
-export class ToDoListComponent implements OnInit {
-  constructor(private databaseService: DatabaseService) { }
+export class ToDoListComponent implements OnInit, OnDestroy {
+  taskRef = undefined;
+  constructor(private databaseService: DatabaseService) {}
 
   ngOnInit() {
     firebase.auth().onAuthStateChanged(
@@ -19,9 +20,9 @@ export class ToDoListComponent implements OnInit {
         if (user) {
           //Upon successful update to database, these events will fire and apply proper
           //modifications to the in-app array which will update the view.
-          let taskRef = firebase.database().ref(`user_tasks/${user.uid}`);
-          taskRef.on('child_added', (child) => this.databaseService.addTaskToApp(child.val())); //Note that this populates the taskArray upon to-do-list component initialization.
-          taskRef.on('child_removed', (child) => {
+          this.taskRef = firebase.database().ref(`user_tasks/${user.uid}`);
+          this.taskRef.on('child_added', (child) => this.databaseService.addTaskToApp(child.val())); //Note that this populates the taskArray upon to-do-list component initialization.
+          this.taskRef.on('child_removed', (child) => {
             //ALG: Find the index of the removed child to update the view.
             //1. Get the task array
             //2. Search through and find the task in the array that matches the ID of the child
@@ -29,15 +30,15 @@ export class ToDoListComponent implements OnInit {
             let taskList = this.databaseService.getTaskList();
             for (let task in taskList) {
               if (taskList[task].id === child.val().id) {
-                this.databaseService.deleteTaskinApp(parseInt(task));
+                this.databaseService.deleteTaskInApp(parseInt(task));
               }
             }
           });
-          taskRef.on('child_changed', (child) => {
+          this.taskRef.on('child_changed', (child) => {
             let taskList = this.databaseService.getTaskList();
             for (let task in taskList) {
               if (taskList[task].id === child.val().id) {
-                this.databaseService.updateTaskInApp(child.val().isComplete, parseInt(task));
+                this.databaseService.updateTaskStatusInApp(child.val().isComplete, parseInt(task));
               }
             }
           });
@@ -45,6 +46,8 @@ export class ToDoListComponent implements OnInit {
       }
     );
   }
+
+  ngOnDestroy() {}
 }
 
 /*  NOTE TO SELF

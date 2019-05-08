@@ -3,6 +3,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/database';
 
 import { AuthService } from '../auth/auth.service';
+import { DatabaseHistoryService } from './database-history.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { AuthService } from '../auth/auth.service';
 export class DatabaseService {
   taskArray = [];
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private databaseHistoryService: DatabaseHistoryService) {}
 
   getTaskList() {
     return this.taskArray;
@@ -18,6 +19,25 @@ export class DatabaseService {
 
   getTaskListLength(tasklist) {
     return Object.keys(tasklist).length;
+  }
+
+  //This may not be needed.
+  populateTaskList(uid: string) {
+    //Ensure that the taskArray of the session is empty.
+    this.taskArray.length = 0;
+
+    firebase.database().ref(`user_tasks/${uid}/`).once("value")
+      .then(
+        (userTaskArray) => {
+          for (let task in userTaskArray.val()) {
+            this.taskArray.push(userTaskArray.val()[task]);
+            console.log(userTaskArray.val()[task]);
+          }
+        }
+      )
+      .catch(
+        (error) => console.log("Error obtaining authenticated user's task list.", error)
+      );
   }
 
   addTask(toDoText: string) {
@@ -68,7 +88,7 @@ export class DatabaseService {
       this.deleteTaskInDatabase(pushKey, this.authService.getUser().uid);
     } else {
       //This is for non-authenticated users.
-      this.deleteTaskinApp(itemIndex);
+      this.deleteTaskInApp(itemIndex);
     }
   };
 
@@ -82,20 +102,20 @@ export class DatabaseService {
       );
   }
 
-  deleteTaskinApp(itemIndex: number) {
+  deleteTaskInApp(itemIndex: number) {
     this.taskArray.splice(itemIndex, 1);
   }
 
-  updateTask(status: boolean, itemIndex: number, pushKey: number = undefined) {
+  updateTaskStatus(status: boolean, itemIndex: number, pushKey: number = undefined) {
     if (this.authService.isAuthenticated()) {
-      this.updateTaskInDatabase(status, pushKey, this.authService.getUser().uid);
+      this.updateTaskStatusInDatabase(status, pushKey, this.authService.getUser().uid);
     } else {
       //This is for non-authenticated users.
-      this.updateTaskInApp(status, itemIndex);
+      this.updateTaskStatusInApp(status, itemIndex);
     }
   }
 
-  updateTaskInDatabase(status: boolean, pushKey: number, uid: string) {
+  updateTaskStatusInDatabase(status: boolean, pushKey: number, uid: string) {
     firebase.database().ref(`user_tasks/${uid}/${pushKey}`).update({ isComplete: status })
       .then(
         () => console.log("Updated task.")
@@ -105,8 +125,32 @@ export class DatabaseService {
       );
   }
 
-  updateTaskInApp(status: boolean, itemIndex: number) {
+  updateTaskStatusInApp(status: boolean, itemIndex: number) {
     this.taskArray[itemIndex].isComplete = status;
+  }
+
+  //This function will only execute if the user is authenticated.
+  moveFinishedTask(itemIndex: number, pushKey: number, uid: string = this.authService.getUser().uid) {
+    let taskRef = firebase.database().ref(`user_tasks/${uid}/${pushKey}/`);
+    let finishedTaskRef = firebase.database().ref(`fin_user_tasks/${uid}/${pushKey}/`);
+
+    taskRef.once('value')
+      .then(
+        (snapshot) => {
+          //Move finished task to fin_user_task parent node in database.
+          finishedTaskRef.update(snapshot.val());
+
+          //Remove finished task from user_task parent node.
+          //Note that the child_removed event will active which will remove it from this array.
+          this.deleteTaskInDatabase(pushKey, uid);
+
+          //Move finished task to finTaskArray in databaseHistory service.
+          this.databaseHistoryService.addFinishedTask(snapshot.val());
+        }
+      )
+      .catch(
+        (error) => console.log("Error retrieving finished task data.", error)
+      );
   }
 
 }

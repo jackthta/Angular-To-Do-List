@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { DatabaseService } from 'src/app/database/database.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-to-do-item',
@@ -11,15 +12,19 @@ export class ToDoItemComponent implements OnInit {
   @Input() task;
   @Input() index: number;
 
-  constructor(private databaseService: DatabaseService) {}
+  constructor(private databaseService: DatabaseService, private authService: AuthService) {}
   ngOnInit() {}
 
-  onDeleteToDo = () => {
+  onDeleteTask() {
     this.databaseService.deleteToDo(this.index, this.task.id);
   };
 
-  onFinished = () => {
-    this.databaseService.updateTask(!this.task.isComplete, this.index ,this.task.id);
+  onMoveTask() {
+    this.databaseService.moveFinishedTask(this.index, this.task.id);
+  }
+
+  onFinishedTask() {
+    this.databaseService.updateTaskStatus(!this.task.isComplete, this.index ,this.task.id);
   };
 
 }

@@ -6,10 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./to-do-history.component.scss']
 })
 export class ToDoHistoryComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  constructor() {}
+  ngOnInit() {}
 }
