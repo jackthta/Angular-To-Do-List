@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./to-do-item.component.scss']
 })
 export class ToDoItemComponent implements OnInit {
-  @Input() task;
+  @Input() task: any;
   @Input() index: number;
 
   constructor(private databaseService: DatabaseService, private authService: AuthService) {}

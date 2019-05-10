@@ -1,3 +1,9 @@
-<p>
-  to-do-history works!
-</p>
+<div>
+  <h1>Finished Tasks</h1>
+  <app-finished-item
+    *ngFor="let finTask of databaseHistoryService.getFinishedTaskList(); index as index"
+    [finTask]="finTask"
+    [index]="index"
+    >
+  </app-finished-item>
+</div>

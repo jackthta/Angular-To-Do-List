@@ -138,14 +138,17 @@ export class DatabaseService {
       .then(
         (snapshot) => {
           //Move finished task to fin_user_task parent node in database.
-          finishedTaskRef.update(snapshot.val());
+          finishedTaskRef.update(snapshot.val())
+            .then(
+              () => console.log("Successfully moved finished task!")
+            )
+            .catch(
+              (error) => console.log("Error moving finished task.", error)
+            );
 
           //Remove finished task from user_task parent node.
           //Note that the child_removed event will active which will remove it from this array.
           this.deleteTaskInDatabase(pushKey, uid);
-
-          //Move finished task to finTaskArray in databaseHistory service.
-          this.databaseHistoryService.addFinishedTask(snapshot.val());
         }
       )
       .catch(
