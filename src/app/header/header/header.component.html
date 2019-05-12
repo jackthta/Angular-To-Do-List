@@ -1,13 +1,35 @@
-<nav>
-    <ul>
-        <li><a routerLink="/">Home</a></li>
-        <ng-template [ngIf]="!authService.isAuthenticated()">
-            <li><a routerLink="/register">Register</a></li>
-            <li><a routerLink="/login">Log in</a></li>
-        </ng-template>
-        <ng-template [ngIf]="authService.isAuthenticated()">
-            <li><a routerLink="/to-do-history">My Task History</a></li>
-            <li><a (click)="onLogout()" routerLink="/">Log out</a></li>
-        </ng-template>
-    </ul>
+<nav class="nav navbar-light bg-light">
+    <div class="container-fluid">
+        <div class="navbar justify-content-end">
+            <!-- Home link -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/">
+                        <span class="fa-stack fa-2x">
+                            <i class="fa fa-square fa-stack-2x"></i>
+                            <i class="fa fa-home fa-stack-1x fa-inverse"></i>
+                        </span>
+                        Home
+                    </a>
+                </li>
+            </ul>
+
+            <div class="dropdown dropleft">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <span class="fas fa-bars fa-3x"></span>
+                </button>
+                <div class="dropdown-menu">
+                    <ng-template [ngIf]="!authService.isAuthenticated()">
+                        <a class="dropdown-item" routerLink="/register">Register</a>
+                        <a class="dropdown-item" routerLink="/login">Log in</a>
+                    </ng-template>
+                    <ng-template [ngIf]="authService.isAuthenticated()">
+                        <a class="dropdown-item" routerLink="/to-do-history">My Task History</a>
+                        <a class="dropdown-item" (click)="onLogout()" routerLink="/">Log out</a>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
 </nav>
