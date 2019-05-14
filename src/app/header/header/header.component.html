@@ -1,35 +1,34 @@
-<nav class="nav navbar-light bg-light">
+<nav class="nav navbar-expand-lg navbar-dark bg-dark pt-3 pb-3">
     <div class="container-fluid">
-        <div class="navbar justify-content-end">
+        <div class="collapse navbar-collapse justify-content-end">
             <!-- Home link -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/">
-                        <span class="fa-stack fa-2x">
-                            <i class="fa fa-square fa-stack-2x"></i>
-                            <i class="fa fa-home fa-stack-1x fa-inverse"></i>
-                        </span>
+                        <span class="fas fa-home fa-2x"></span>
                         Home
                     </a>
                 </li>
             </ul>
 
-            <div class="dropdown dropleft">
-                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <span class="fas fa-bars fa-3x"></span>
-                </button>
-                <div class="dropdown-menu">
-                    <ng-template [ngIf]="!authService.isAuthenticated()">
-                        <a class="dropdown-item" routerLink="/register">Register</a>
-                        <a class="dropdown-item" routerLink="/login">Log in</a>
-                    </ng-template>
-                    <ng-template [ngIf]="authService.isAuthenticated()">
-                        <a class="dropdown-item" routerLink="/to-do-history">My Task History</a>
-                        <a class="dropdown-item" (click)="onLogout()" routerLink="/">Log out</a>
-                    </ng-template>
-                </div>
-            </div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="far fa-caret-square-down fa-2x">
+                        </span>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                        <ng-template [ngIf]="!authService.isAuthenticated()">
+                            <a class="dropdown-item" routerLink="/register">Register</a>
+                            <a class="dropdown-item" routerLink="/login">Log in</a>
+                        </ng-template>
+                        <ng-template [ngIf]="authService.isAuthenticated()">
+                            <a class="dropdown-item" routerLink="/to-do-history">My Task History</a>
+                            <a class="dropdown-item" (click)="onLogout()" routerLink="/">Log out</a>
+                        </ng-template>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
