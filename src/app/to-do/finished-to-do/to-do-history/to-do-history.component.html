@@ -1,9 +1,10 @@
-<div>
-  <h1>Finished Tasks</h1>
-  <app-finished-item
-    *ngFor="let finTask of databaseHistoryService.getFinishedTaskList(); index as index"
-    [finTask]="finTask"
-    [index]="index"
-    >
-  </app-finished-item>
+<div class="container">
+  <h1 class="display-3 text-center mt-3 mb-3">Your finished things.</h1>
+  <div class="row">
+    <div class="col">
+      <app-finished-item *ngFor="let finTask of databaseHistoryService.getFinishedTaskList(); index as index"
+        [finTask]="finTask" [index]="index">
+      </app-finished-item>
+    </div>
+  </div>
 </div>

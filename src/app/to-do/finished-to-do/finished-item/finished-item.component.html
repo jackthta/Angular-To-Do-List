@@ -1,6 +1,12 @@
-<div>
-  <span>{{ finTask.task }}</span>
-  <button
-    (click)="onDeleteTask()"
-    >✖</button>
+<div class="container">
+  <div class="row border rounded mt-2 mb-2 pt-2 pb-2">
+    <div class="col-11 text-left align-self-center">
+      <span>{{ finTask.task }}</span>
+    </div>
+    <div class="col-1">
+      <button class="btn btn-danger btn-lg" (click)="onDeleteTask()">
+        <span class="fas fa-trash"></span>
+      </button>
+    </div>
+  </div>
 </div>
