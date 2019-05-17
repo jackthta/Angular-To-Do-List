@@ -1,5 +1,15 @@
 <div class="container">
-  <h1 class="display-3 text-center mt-3 mb-3">Your finished things.</h1>
+
+  <!-- Header title -->
+  <div *ngIf="databaseHistoryService.getFinishedTaskList().length > 0; then thenClause else elseClause"></div>
+    <ng-template #thenClause>
+        <h1 class="display-3 text-center mt-3 mb-3">Your finished things.</h1>
+    </ng-template>
+    <ng-template #elseClause>
+        <h1 class="display-3 text-center mt-3 mb-3">Finish a thing.</h1>
+    </ng-template>
+
+  <!-- Finished tasks -->
   <div class="row">
     <div class="col">
       <app-finished-item *ngFor="let finTask of databaseHistoryService.getFinishedTaskList(); index as index"
