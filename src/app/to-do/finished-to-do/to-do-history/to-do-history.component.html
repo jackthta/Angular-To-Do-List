@@ -3,18 +3,24 @@
   <!-- Header title -->
   <div *ngIf="databaseHistoryService.getFinishedTaskList().length > 0; then thenClause else elseClause"></div>
     <ng-template #thenClause>
-        <h1 class="display-3 text-center mt-3 mb-3">Your finished things.</h1>
+      <div *ngIf="databaseHistoryService.getFinishedTaskList().length === 1; then oneThing else moreThings"></div>
+        <ng-template #oneThing>
+          <h1 class="display-3 text-center mt-3 mb-3">Your finished thing.</h1>
+        </ng-template>
+        <ng-template #moreThings>
+          <h1 #moreThings class="display-3 text-center mt-3 mb-3">Your finished things.</h1>
+        </ng-template>
     </ng-template>
     <ng-template #elseClause>
-        <h1 class="display-3 text-center mt-3 mb-3">Finish a thing.</h1>
+      <h1 class="display-3 text-center mt-3 mb-3">Finish a thing.</h1>
     </ng-template>
 
-  <!-- Finished tasks -->
-  <div class="row">
-    <div class="col">
-      <app-finished-item *ngFor="let finTask of databaseHistoryService.getFinishedTaskList(); index as index"
-        [finTask]="finTask" [index]="index">
-      </app-finished-item>
+    <!-- Finished tasks -->
+    <div class="row">
+      <div class="col">
+        <app-finished-item *ngFor="let finTask of databaseHistoryService.getFinishedTaskList(); index as index"
+          [finTask]="finTask" [index]="index">
+        </app-finished-item>
+      </div>
     </div>
-  </div>
 </div>
