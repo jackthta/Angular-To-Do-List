@@ -3,7 +3,7 @@
         <div class="col-1 text-center">
             <input type="checkbox" (click)="onFinishedTask()" [checked]="task.isComplete" />
         </div>
-        <div class="col-10 text-left">
+        <div class="col-10 text-left overflow-auto">
             <span>{{ task.task }}</span>
         </div>
         <div class="col-1 text-right">

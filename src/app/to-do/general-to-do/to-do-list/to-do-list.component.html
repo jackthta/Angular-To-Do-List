@@ -1,17 +1,17 @@
 <div class="container mt-5 pb-5">
+    <!-- Header title -->
     <div class="row justify-content-center align-items-center">
+        <div *ngIf="databaseService.getTaskList().length > 0; then thenClause else elseClause"></div>
+        <ng-template #thenClause>
+            <h1 class="display-3 mt-3 mb-3 text-center">Do all the things.</h1>
+        </ng-template>
+        <ng-template #elseClause>
+            <h1 class="display-3 mt-3 mb-3 text-center">Put a thing down.</h1>
+        </ng-template>
+    </div>
+    <!-- Tasks -->
+    <div class="task-list row justify-content-center align-items-center overflow-auto">
         <div class="col">
-
-            <!-- Header title -->
-            <div *ngIf="databaseService.getTaskList().length > 0; then thenClause else elseClause"></div>
-                <ng-template #thenClause>
-                    <h1 class="display-3 mt-3 mb-3 text-center">Do all the things.</h1>
-                </ng-template>
-                <ng-template #elseClause>
-                    <h1 class="display-3 mt-3 mb-3 text-center">Put a thing down.</h1>
-                </ng-template>
-
-            <!-- Tasks -->
             <div class="tasks">
                 <app-to-do-item *ngFor="let task of databaseService.getTaskList(); index as index" [task]="task"
                     [index]="index">
@@ -19,6 +19,7 @@
             </div>
         </div>
     </div>
+    <!-- Add to do input -->
     <div class="row justify-content-center align-items-center">
         <div class="col">
             <app-add-to-do></app-add-to-do>

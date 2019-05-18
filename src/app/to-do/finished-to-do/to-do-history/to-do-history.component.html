@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mt-5 pb-5">
 
   <!-- Header title -->
   <div *ngIf="databaseHistoryService.getFinishedTaskList().length > 0; then thenClause else elseClause"></div>
@@ -17,7 +17,7 @@
 
     <!-- Finished tasks -->
     <div class="row">
-      <div class="col">
+      <div class="col fin-task-list overflow-auto">
         <app-finished-item *ngFor="let finTask of databaseHistoryService.getFinishedTaskList(); index as index"
           [finTask]="finTask" [index]="index">
         </app-finished-item>
