@@ -1,27 +1,10 @@
-# ToDoList
+# Daily Task Manager (Angular 7)
+This is a simple daily task managing, single page application. This project was built using Angular 7, Firebase's Realtime Database, and Bootstrap 4. Angular routing was used to traverse different pages. Firebase's Authentication was used to allow for user authentication and authorization (via authorization guard). Functionality includes adding tasks, checking them to complete them, and deleting them. Deleting checked (finished) tasks will move them to your own task history traversable through the navigation bar. You can then delete them from the task history if need be. Deleting unchecked (unfinished) tasks will just delete them.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
+## Showcase
+Showcase will come soon.
 
-## Development server
+## Built With
+<img src="https://cdn.worldvectorlogo.com/logos/html5.svg" alt="HTML5" width="100px" height="100px"> <img src="https://cdn.worldvectorlogo.com/logos/css-5.svg" alt="CSS3" width="100px" height="100px"> <img src="https://cdn.worldvectorlogo.com/logos/sass-1.svg" alt="Bootstrap 4" width="100px" height="100px"> <img src="https://cdn.worldvectorlogo.com/logos/bootstrap-4.svg" alt="Bootstrap 4" width="100px" height="100px">
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+<img src="https://cdn.worldvectorlogo.com/logos/angular-icon-1.svg" alt="Angular 7" width="100px" height="100px"> <img src="https://cdn.worldvectorlogo.com/logos/firebase-1.svg" alt="Firebase" width="100px" height="100px"> <img src="https://cdn.worldvectorlogo.com/logos/webpack-icon.svg" alt="Webpack" width="100px" height="100px">
