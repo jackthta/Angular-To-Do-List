@@ -9,7 +9,7 @@ This is a simple daily task managing, single page application. This project was 
 <img src="https://github.com/jackthta/Angular-To-Do-List/blob/master/showcase/Authenticated%20Traverse.gif" alt="Authenticated traversing." width="50%" height="50%">
 
 ### Adding and deleting task(s).
-<img src="https://github.com/jackthta/Angular-To-Do-List/blob/master/showcase/Making%20and%20deleting%20tasks.gif" alt="Adding and deleting task(s)." width="50%" height="50%">
+<img src="https://github.com/jackthta/Angular-To-Do-List/blob/master/showcase/Adding%20and%20deleting%20tasks.gif" alt="Adding and deleting task(s)." width="50%" height="50%">
 
 ## Built With
 <img src="https://cdn.worldvectorlogo.com/logos/html5.svg" alt="HTML5" width="100px" height="100px"> <img src="https://cdn.worldvectorlogo.com/logos/css-5.svg" alt="CSS3" width="100px" height="100px"> <img src="https://cdn.worldvectorlogo.com/logos/sass-1.svg" alt="Bootstrap 4" width="100px" height="100px"> <img src="https://cdn.worldvectorlogo.com/logos/bootstrap-4.svg" alt="Bootstrap 4" width="100px" height="100px">
